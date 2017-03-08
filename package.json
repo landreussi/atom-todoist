@@ -1,0 +1,19 @@
+{
+  "name": "atom-todoist",
+  "main": "./lib/atom-todoist",
+  "version": "0.0.1",
+  "description": "A clean visualization of your todoist tasks in atom",
+  "keywords": [
+  ],
+  "activationCommands": {
+    "atom-workspace": "atom-todoist:toggle"
+  },
+  "repository": "https://github.com/atom/atom-todoist",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "command-runner" : "^0.1.2"
+  }
+}
