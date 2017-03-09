@@ -1,23 +1,23 @@
-
 module.exports =
 class AtomTodoistView
   constructor: (serializedState) ->
-    # Create root element
-    @element = document.createElement('div')
-    @element.classList.add('atom-todoist')
 
-    # Create message element
+    exec = require('child_process').exec
+    @main = document.createElement('div')
+    @main.classList.add('atom-todoist')
     message = document.createElement('div')
-    message.textContent = "the token is " + atom.config.get('atom-todoist.token')
+    output = exec("curl https://todoist.com/API/v7/sync \ -d token=" + atom.config.get('atom-todoist.token') + "\ -d sync_token='*' \ -d resource_types='[\"all\"]'")
+    output.stdout.on 'data', (data) ->
+      message.textContent = data
     message.classList.add('message')
-    @element.appendChild(message)
+    @main.appendChild(message)
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
 
   # Tear down any state and detach
   destroy: ->
-    @element.remove()
+    @main.remove()
 
   getElement: ->
-    @element
+    @main

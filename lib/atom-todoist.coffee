@@ -3,7 +3,7 @@ AtomTodoistView = require './atom-todoist-view'
 
 module.exports = AtomTodoist =
     atomTodoistView: null
-    modalPanel: null
+    rightPanel: null
     subscriptions: null
 
     config:
@@ -15,7 +15,7 @@ module.exports = AtomTodoist =
 
     activate: (state) ->
         @atomTodoistView = new AtomTodoistView(state.atomTodoistViewState)
-        @modalPanel = atom.workspace.addModalPanel(item: @atomTodoistView.getElement(), visible: false)
+        @rightPanel = atom.workspace.addRightPanel(item: @atomTodoistView.getElement(), visible: false)
 
         # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
         @subscriptions = new CompositeDisposable
@@ -24,7 +24,7 @@ module.exports = AtomTodoist =
         @subscriptions.add atom.commands.add 'atom-workspace', 'atom-todoist:toggle': => @toggle()
 
     deactivate: ->
-        @modalPanel.destroy()
+        @rightPanel.destroy()
         @subscriptions.dispose()
         @atomTodoistView.destroy()
 
@@ -32,7 +32,7 @@ module.exports = AtomTodoist =
         atomTodoistViewState: @atomTodoistView.serialize()
 
     toggle: ->
-        if @modalPanel.isVisible()
-            @modalPanel.hide()
+        if @rightPanel.isVisible()
+            @rightPanel.hide()
         else
-            @modalPanel.show()
+            @rightPanel.show()
