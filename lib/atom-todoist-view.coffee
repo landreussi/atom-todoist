@@ -5,7 +5,6 @@ class AtomTodoistView
         @main = document.createElement('div')
         @main.classList.add('atom-todoist')
         message = document.createElement('div')
-        list = document.createElement('ul')
         data =
             url : "https://todoist.com/API/v7/sync"
             form:
@@ -14,23 +13,44 @@ class AtomTodoistView
                 resource_types:'["all"]'
 
         callback = (err,httpResponse,body) ->
-            project_id = []
+            todo_projects = []
             todoist = JSON.parse(body)
             for i in [0...todoist.projects.length]
               for j in [0...atom.project.getPaths().length]
                 atom_projects = atom.project.getPaths()[j].split("/")
                 if !todoist.projects[i].inbox_project and todoist.projects[i].name.toUpperCase() == atom_projects[atom_projects.length - 1].toUpperCase()
-                    project_id.push(todoist.projects[i].id);
+                    todo_projects.push({id: todoist.projects[i].id, name: todoist.projects[i].name});
 
-            for i in [0...project_id.length]
+            for i in [0...todo_projects.length]
                 for j in [0...todoist.items.length]
-                    if todoist.items[j].id = project_id[i]
+                    if todoist.items[j].project_id == todo_projects[i].id
+                      if document.getElementById(todo_projects[i].id.toString()) == null
+                        list_parent = document.createElement('ul')
+                        list_parent.setAttribute('id', todo_projects[i].id.toString() + "_parent")
+                        line_parent = document.createElement('li')
+                        h4 = document.createElement('h4')
+                        h4.textContent = todo_projects[i].name
+                        line_parent.appendChild(h4);
+                        list = document.createElement('ul')
+                        list.setAttribute('id', todo_projects[i].id.toString())
+                        list_parent.appendChild(line_parent)
+                        list_parent.appendChild(list)
+                        message.appendChild(list_parent)
+                      parent = document.getElementById(todo_projects[i].id.toString())
                       line = document.createElement('li')
-                      line.textContent = todoist.items[j].content
-                      list.appendChild(line)
+                      input = document.createElement('input')
+                      input.setAttribute('type', 'checkbox')
+                      input.setAttribute('id', todoist.items[j].id.toString())
+                      label = document.createElement('label')
+                      label.setAttribute('for', todoist.items[j].id.toString())
+                      label.textContent = todoist.items[j].content
+                      line.appendChild(input)
+                      line.appendChild(label)
+                      parent.appendChild(line)
 
-        message.appendChild(list)
-        message.classList.add('message')
+
+            message.classList.add('message')
+            console.log(message)
         request.post(data, callback)
 
         @main.appendChild(message)
