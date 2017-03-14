@@ -43,8 +43,9 @@ class AtomTodoistView
                       input.setAttribute('id', todoist.items[j].id.toString())
                       label = document.createElement('label')
                       label.setAttribute('for', todoist.items[j].id.toString())
-                      label.textContent = todoist.items[j].content
-                      line.appendChild(input)
+                      text = document.createTextNode(" " + todoist.items[j].content)
+                      label.appendChild(input)
+                      label.appendChild(text)
                       line.appendChild(label)
                       parent.appendChild(line)
 
