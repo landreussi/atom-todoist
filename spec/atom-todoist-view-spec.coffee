@@ -1,5 +1,5 @@
-AtomTodoistView = require '../lib/atom-todoist-view'
+AtomTodoist = require '../lib/atom-todoist'
 
-describe "AtomTodoistView", ->
+describe "AtomTodoist", ->
   it "has one valid test", ->
     expect("life").toBe "easy"

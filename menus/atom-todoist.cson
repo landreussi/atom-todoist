@@ -3,7 +3,7 @@
   'atom-text-editor': [
     {
       'label': 'Toggle atom-todoist'
-      'command': 'atom-todoist:toggle'
+      'command': 'main:toggle'
     }
   ]
 'menu': [
@@ -14,7 +14,7 @@
       'submenu': [
         {
           'label': 'Toggle'
-          'command': 'atom-todoist:toggle'
+          'command': 'main:toggle'
         }
       ]
     ]
