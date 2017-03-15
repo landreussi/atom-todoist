@@ -51,7 +51,6 @@ class AtomTodoistView
 
 
             message.classList.add('message')
-            console.log(message)
         request.post(data, callback)
 
         @main.appendChild(message)

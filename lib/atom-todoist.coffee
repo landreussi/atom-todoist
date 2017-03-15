@@ -14,12 +14,7 @@ module.exports = AtomTodoist =
             description: 'Insert the Todoist API Token'
 
     activate: (state) ->
-        @atomTodoistView = new AtomTodoistView(state.atomTodoistViewState)
-        @rightPanel = atom.workspace.addRightPanel(item: @atomTodoistView.getElement(), visible: false)
-        # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
         @subscriptions = new CompositeDisposable
-
-        # Register command that toggles this view
         @subscriptions.add atom.commands.add 'atom-workspace', 'atom-todoist:toggle': => @toggle(state)
 
     deactivate: ->
@@ -31,12 +26,15 @@ module.exports = AtomTodoist =
         atomTodoistViewState: @atomTodoistView.serialize()
 
     toggle: (state)->
-        if @toggled
-          @toggled = false
-          @rightPanel.destroy()
-          @atomTodoistView.destroy()
+        if atom.config.get('atom-todoist.token') == ''
+          atom.notifications.addFatalError("Error", detail: "Todoist could not find any token\nPlease insert your todoist token into the settings")
         else
-          @toggled = true
-          @atomTodoistView = new AtomTodoistView(state.atomTodoistViewState)
-          @rightPanel = atom.workspace.addRightPanel(item: @atomTodoistView.getElement(), visible: false)
-          @rightPanel.show()
+          if @toggled
+            @toggled = false
+            @rightPanel.destroy()
+            @atomTodoistView.destroy()
+          else
+            @toggled = true
+            @atomTodoistView = new AtomTodoistView(state.atomTodoistViewState)
+            @rightPanel = atom.workspace.addRightPanel(item: @atomTodoistView.getElement(), visible: false)
+            @rightPanel.show()
