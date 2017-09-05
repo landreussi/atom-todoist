@@ -17,9 +17,9 @@ class AtomTodoist
             todoist = JSON.parse(body)
             for i in [0...todoist.projects.length]
               for j in [0...atom.project.getPaths().length]
-                atom_projects = atom.project.getPaths()[j].split("/")
+                atom_projects = atom.project.getPaths()[j].replace(/\\/g, '/').split("/")
                 if !todoist.projects[i].inbox_project and todoist.projects[i].name.toUpperCase() == atom_projects[atom_projects.length - 1].toUpperCase()
-                    todo_projects.push({id: todoist.projects[i].id, name: todoist.projects[i].name});
+                    todo_projects.push({id: todoist.projects[i].id, name: todoist.projects[i].name})
 
             for i in [0...todo_projects.length]
                 for j in [0...todoist.items.length]
@@ -30,7 +30,7 @@ class AtomTodoist
                         line_parent = document.createElement('li')
                         h4 = document.createElement('h4')
                         h4.textContent = todo_projects[i].name
-                        line_parent.appendChild(h4);
+                        line_parent.appendChild(h4)
                         list = document.createElement('ul')
                         list.setAttribute('id', todo_projects[i].id.toString())
                         list_parent.appendChild(line_parent)
@@ -59,7 +59,7 @@ class AtomTodoist
     # Returns an object that can be retrieved when package is activated
 
     updateTasks: ->
-      elements = document.querySelectorAll("input[type=checkbox]");
+      elements = document.querySelectorAll("input[type=checkbox]")
       todos = ''
       processed = 0
       request = @request
@@ -80,7 +80,7 @@ class AtomTodoist
           callback = (err,httpResponse,body) ->
             console.log(body)
           request.post(data, callback)
-      Array.prototype.forEach.call(elements, each);
+      Array.prototype.forEach.call(elements, each)
 
     serialize: ->
 
