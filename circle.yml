@@ -1,7 +1,7 @@
 machine:
   environment:
     ATOM_LINT_WITH_BUNDLED_NODE: "true"
-    APM_TEST_PACKAGES: ""
+    APM_TEST_PACKAGES: "request"
     ATOM_CHANNEL: "stable"
 
 dependencies:
