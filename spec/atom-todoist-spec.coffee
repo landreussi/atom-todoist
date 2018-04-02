@@ -11,31 +11,25 @@ describe "AtomTodoist", ->
   beforeEach ->
     workspaceElement = atom.views.getView(atom.workspace)
     activationPromise = atom.packages.activatePackage('atom-todoist')
-    atom.config.set('atom-todoist.token', '34cfbe090c52239a5eca49017bce6b0f585752ff') 
+    atom.config.set('atom-todoist.token', '34cfbe090c52239a5eca49017bce6b0f585752ff')
 
   describe "when the atom-todoist:toggle event is triggered", ->
     it "hides and shows the modal panel", ->
       # Before the activation event the view is not on the DOM, and no panel
-      # has been created
-      expect(workspaceElement.querySelector('.atom-todoist')).not.toExist()
+      # has been created (actually it will toggle itself when get activated)
+      atomTodoistElement = workspaceElement.querySelector('.atom-todoist')
+      expect(atomTodoistElement).toExist()
 
-      # This is an activation event, triggering it will cause the package to be
-      # activated.
-      # atom.commands.dispatch workspaceElement, 'atom-todoist:toggle'
+      atomTodoistPanel = atom.workspace.panelForItem(atomTodoistElement)
+      expect(atomTodoistPanel.isVisible()).toBe true      
 
       waitsForPromise ->
         activationPromise
 
       runs ->
-        expect(workspaceElement.querySelector('.atom-todoist')).toExist()
-
-        atomTodoistElement = workspaceElement.querySelector('.atom-todoist')
-        expect(atomTodoistElement).toExist()
-
-        atomTodoistPanel = atom.workspace.panelForItem(atomTodoistElement)
-        expect(atomTodoistPanel.isVisible()).toBe true
         atom.commands.dispatch workspaceElement, 'atom-todoist:toggle'
         expect(atomTodoistPanel.isVisible()).toBe false
+        expect(workspaceElement.querySelector('.atom-todoist')).not.toExist()
 
     it "hides and shows the view", ->
       # This test shows you an integration test testing at the view level.
