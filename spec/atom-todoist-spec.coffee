@@ -11,7 +11,7 @@ describe "AtomTodoist", ->
   beforeEach ->
     workspaceElement = atom.views.getView(atom.workspace)
     activationPromise = atom.packages.activatePackage('atom-todoist')
-    AtomTodoist.config.token = '34cfbe090c52239a5eca49017bce6b0f585752ff'
+    atom.config.set('atom-todoist.token', '34cfbe090c52239a5eca49017bce6b0f585752ff') 
 
   describe "when the atom-todoist:toggle event is triggered", ->
     it "hides and shows the modal panel", ->
