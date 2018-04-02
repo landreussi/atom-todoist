@@ -20,7 +20,7 @@ describe "AtomTodoist", ->
 
       # This is an activation event, triggering it will cause the package to be
       # activated.
-      atom.commands.dispatch workspaceElement, 'atom-todoist:toggle'
+      # atom.commands.dispatch workspaceElement, 'atom-todoist:toggle'
 
       waitsForPromise ->
         activationPromise
