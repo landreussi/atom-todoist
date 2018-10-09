@@ -6,3 +6,5 @@ You can check the tasks, but it will delete the task, not conclude her (I will f
 
 A silly preview:
 ![alt text](https://i.imgur.com/h9DH4cz.jpg)
+
+## Pull requests are extremely welcome
